@@ -4,11 +4,17 @@
 #[macro_use]
 extern crate clap;
 use clap::{ App, ArgMatches };
+// mod action;
+// use action::helpers::debug;
+
+mod arg;
+use arg::helpers::has_arg;
+
+mod action;
+use action::types::{ActionResult};
 
 use std::process::{ exit };
 use std::io::{ self, BufRead };
-
-type ActionResult = Result<(), String>;
 
 fn string_action(args: &ArgMatches) -> ActionResult {
   let text = args.value_of("text").unwrap();
@@ -21,6 +27,10 @@ fn string_action(args: &ArgMatches) -> ActionResult {
       }
     },
   };
+
+  // let highlight_flag = has_arg(args, "highlight");
+
+  // let show_all_flag = has_arg(args, "show_all");
 
   let mut counter = 0;
   let mut input = String::new();
@@ -42,10 +52,10 @@ fn string_action(args: &ArgMatches) -> ActionResult {
 
         let occ: Vec<&str> = input.matches(text).collect();
         counter += occ.len();
-
         if occ.len() > 0 {
-          print!("{}", input);
-        };
+          println!("{}", input);
+        }
+        // FIXME need to handle other fancy flags
       },
       Err(_) => {
         return Err("Failed to read `stdin`".to_string());
@@ -64,9 +74,9 @@ fn run_command(matches: ArgMatches) -> ActionResult {
       let args = sub_args.unwrap();
       string_action(args)
     },
-    &("regexp", sub_args) => {
-      panic!("Not implemented yet");
-    },
+    // &("regexp", sub_args) => {
+    //   panic!("Not implemented yet");
+    // },
     _ => Err("No suitable subcommand".to_string()),
   }
 }
@@ -74,6 +84,7 @@ fn run_command(matches: ArgMatches) -> ActionResult {
 
 fn main() {
   let yaml = load_yaml!("cli.yml");
+  // println!("{:?}", yaml);
   let matches = App::from_yaml(yaml).get_matches();
 
   exit(match run_command(matches) {
