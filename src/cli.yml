@@ -1,39 +1,27 @@
 name: waitfor
 version: "0.1"
-about: "ABOUT"
-author: "AUTHOR"
-# args:
-#   - show_matches
-#       help: shows alternative help
 
 subcommands:
   - string:
-    about: "looking for occurence of the given content"
-    args:
-      - text:
-        required: true
-        index: 1
+      about: "Looking for occurence of the given content"
+      args:
+        - text:
+            required: true
+            index: 1
 
-      - times:
-        short: n
-        help: Number of given string occurence
-        long: times
-        takes_value: true
+        - times:
+            short: n
+            help: Number of given string occurence
+            long: times
+            takes_value: true
 
-      - show_matches:
-        short: v
-        help: Shows matched lines
-        long: show
+        - highlight:
+            short: H
+            help: Highlights matches
+            long: highlight-matches
 
-
-
-
-        # defaults: 1
-        # long: times
-        # help: print debug information
-
-        # - regex:
-        #     about: "looking for occurence of the given content"
-        #     short: re
-        #     args:
+        - show_all:
+            short: s
+            help: shows all content
+            long: show-all
 
