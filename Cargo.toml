@@ -5,8 +5,3 @@ authors = ["Sergey Valiev <svaliev@gmail.com>"]
 
 [dependencies]
 clap = { features = ["yaml"] }
-#clap2
-#arraymap = "0.1.0"
-#docopt = "0.8"
-#serde = "1.0" # if you're using `derive(Deserialize)`
-#serde_derive = "1.0" # if you're using `derive(Deserialize)`
