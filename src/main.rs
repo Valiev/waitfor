@@ -16,6 +16,9 @@ use action::types::{ActionResult};
 use std::process::{ exit };
 use std::io::{ self, BufRead };
 
+extern crate colored;
+use colored::*;
+
 fn string_action(args: &ArgMatches) -> ActionResult {
   let text = args.value_of("text").unwrap();
   let max_times = match args.value_of("times") {
@@ -28,9 +31,8 @@ fn string_action(args: &ArgMatches) -> ActionResult {
     },
   };
 
-  // let highlight_flag = has_arg(args, "highlight");
-
-  // let show_all_flag = has_arg(args, "show_all");
+  let highlight_flag = has_arg(args, "highlight");
+  let show_all_flag = has_arg(args, "show_all");
 
   let mut counter = 0;
   let mut input = String::new();
@@ -53,7 +55,17 @@ fn string_action(args: &ArgMatches) -> ActionResult {
         let occ: Vec<&str> = input.matches(text).collect();
         counter += occ.len();
         if occ.len() > 0 {
-          println!("{}", input);
+          // println!("{}", input);
+          if highlight_flag {
+            // FIXME highlight only matched part
+            print!("{}", input.green());
+          } else {
+            print!("{}", input);
+          }
+        } else {
+          if show_all_flag {
+            print!("{}", input);
+          }
         }
         // FIXME need to handle other fancy flags
       },
